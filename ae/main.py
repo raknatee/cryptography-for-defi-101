@@ -10,8 +10,8 @@ KE_KD = keygen(2,7)
 K_E = KE_KD["K_E"]
 K_D = KE_KD["K_D"]
 
-print(f"{K_E}")
-print(f"{K_D}")
+print(f"{K_E=}")
+print(f"{K_D=}")
 
 
 
