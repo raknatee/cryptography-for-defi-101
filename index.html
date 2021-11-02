@@ -52,7 +52,7 @@
             <ul>
                 <li>Input length and Fixed Output length => cannot contain the information of DATA</li>
                 <ul>
-                    <li>Ex: HelloWorld => Hello <pre><code>def h(input):
+                    <li>Ex: HelloWorld => Hello <pre><code>def Hash(input):
     return input[:5]</code></pre></li>
                 </ul>
                 <li>Security Definitions</li>
@@ -60,20 +60,25 @@
                     <li>Pre-image Resistance</li>
                     <ul>
                         <li> It should be difficult to figure out what was hashed simply by looking at the hash value.
-                            <pre><code>def h(input):
+                            <pre><code>def Hash(input):
     return input[:1]</code></pre></li>
                     </ul>
                     <li>Collision Resistance</li>
                     <ul>
-                        <li>2 inputs same output <pre><code>def h(input):
+                        <li>2 inputs same output <pre><code>def Hash(input):
     return input</code></pre></li>
                     </ul>
                 </ul>
-                <li class="skip">Securit Proofs</li>
+                <li class="skip">Security Proofs</li>
                 <ul class="skip">
                     <li>Pre-image attacks</li>
                     <li>Second pre-image attacks</li>
                     <li>Collision-finding attacks</li>
+                </ul>
+                <li>SHA256</li>
+                <ul>
+                    <li>HelloWorld => 872e4e50ce9990d8b041330c47c9ddd11bec6b503ae9386a99da8584e9bb12c4</li>
+                    <li>HelloWorldd => 61b5db76aeef61f0b9357a31580a73b5c87c8e90eae8e350d13fe6307eae036e</li>
                 </ul>
             </ul>
 
@@ -81,12 +86,19 @@
         </ul>
         <li>Symmetric</li>
         <ul>
+            <li>Key Setup</li>
             <li>Symmetric Encryption</li>
             <ul>
                 <li>Ex: One-time Pad</li>
-                <pre><code>msg='1100'
-key='0110'
-ciphere_text='1010'</code></pre>
+                <pre><code>msg = "1100"
+Key = "0110"
+
+cipher_text = SymmetricEncrypt(Key, msg) = "1010"
+send(ciphere_text)</code></pre>
+                <pre><code>assume Key
+cipher_text = receive()
+
+msg = SymmetricDecrypt(Key, cipher_text)</code></pre>
                 <li>Why One-time Pad is perfect secrecy but it cannot be used in real life.</li>
                 <p>
                     \(n \in Z^+ \)
@@ -117,12 +129,48 @@ ciphere_text='1010'</code></pre>
         </ul>
         <li>Asymmetric</li>
         <ul>
+            <li>Key Setup</li>
+
+            <li>Key generation</li>
+            <pre><code>K_E, K_D = keygen(...)
+
+Asymmetric Encryption: 
+    K_E => Public Key, K_D => Private Key
+
+Digital Signature:
+    K_D => Public Key, K_E => Private Key</code></pre>
             <li class="skip">Asymmetric Encryption</li>
             <li>Digital Signature</li>
             <ul>
-                <li>Key generation</li>
                 <li>Sign</li>
+                <pre><code>K_E, K_D = keygen(...)
+Private_Key = K_E
+Public_Key = K_D
+
+msg = "HelloWorld"
+tag = Sign(Private_Key, msg)
+
+send(msg, tag)</code></pre>
                 <li>Verify</li>
+                <pre><code>assume Public_Key
+
+msg, tag = receive()
+ok? = Verify(Public_Key, msg, tag)</code></pre>
+                <li>Ex</li>
+                A == 1 bitcoin ==> B
+                <pre><code>K_E, K_D = keygen(...)
+Private_Key_A = K_E
+Public_Key_A  = K_D
+
+msg = "transfer 1 bitcoin to B"
+tag = Sign(Private_Key_A, msg) = "UXIJKF"
+
+send(msg, tag)</code></pre>
+                <pre><code>assume Public_Key_A
+msg, tag = receive()
+
+ok? = Verity(Public_Key_A, msg, tag)
+</code></pre>
             </ul>
         </ul>
         <li>After class</li>
