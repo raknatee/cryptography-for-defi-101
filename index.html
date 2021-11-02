@@ -6,10 +6,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         cryptography For DeFi 101</title>
+    <link rel="stylesheet" href="./main-style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        code {
+            display: inline-block;
+        }
+    </style>
 </head>
 
 <body>
+    <h1>Noted Topics</h1>
+    <ol>
+        <li>What is exactly Cryptography?</li>
+        <ul>
+            <li>
+                Communication in the presence of adversaries.
+            </li>
+            <li>2 Worlds Setting</li>
+            <ul>
+                <li>Symmetric</li>
+                <li>Asymmetric</li>
+            </ul>
+        </ul>
+        <li>Items</li>
+        <ul>
+            <li class="skip">Block Ciphers</li>
+            <ul class="skip">
+                <li>DES, AES, etc.</li>
+                <li>Securit Proofs</li>
+                <ul>
+                    <li>PRP-CPA</li>
+                    <li>PRP-CCA</li>
+                    <li>PRF</li>
+                </ul>
+            </ul>
+            <li>Hash Function</li>
+            <ul>
+                <li>Input length and Fixed Output length => cannot contain the information of DATA</li>
+                <ul>
+                    <li>Ex: HelloWorld => Hello <pre><code>def h(input):
+    return h[:5]</code></pre></li>
+                </ul>
+                <li>Security Definitions</li>
+                <ul>
+                    <li>Pre-image Resistance</li>
+                    <ul>
+                        <li> It should be difficult to figure out what was hashed simply by looking at the hash value.
+                            <pre><code>def h(input):
+    return h[:1]</code></pre></li>
+                    </ul>
+                    <li>Collision Resistance</li>
+                    <ul>
+                        <li>2 inputs same output <pre><code>def h(input):
+    return h</code></pre></li>
+                    </ul>
+                </ul>
+                <li class="skip">Securit Proofs</li>
+                <ul class="skip">
+                    <li>Pre-image attacks</li>
+                    <li>Second pre-image attacks</li>
+                    <li>Collision-finding attacks</li>
+                </ul>
+            </ul>
 
+
+        </ul>
+        <li>Symmetric</li>
+        <ul>
+            <li>Symmetric Encryption</li>
+            <ul>
+                <li>Ex: One-time Pad</li>
+                <li>Why One-time Pad is perfect secrecy but it cannot be used in real life.</li>
+                <p>
+                    \(n \in Z^+ \)
+                </p>
+                <p>
+                    \(a,b \in \{0,1\}^n \)
+                </p>
+                <p>
+                    \(Pr[M = a |C = b] = Pr[M=a]\)
+                </p>
+                <li class="skip">Symmetric Encryption = Modes of operation + Block Ciphers</li>
+                <li class="skip">Modes of operation</li>
+                <ul class="skip">
+                    <li>Electronic Code Book mode (ECB)</li>
+                    <li>Cipher Block Chaining mode (CBC$)</li>
+                    <li>Cipher Block Chaining mode (CBCC)</li>
+                    <li>Counter mode (CTRC)</li>
+                    <li>Counter mode (CTR$)</li>
+                </ul>
+                <li class="skip">Securiy Proofs</li>
+                <ul class="skip">
+                    <li>IND-CPA</li>
+                    <li>IND-CPA</li>
+                    <li>IND-CCA</li>
+                </ul>
+            </ul>
+            <li class="skip">Message Authentication Code (MAC)</li>
+        </ul>
+        <li>Asymmetric</li>
+        <ul>
+            <li class="skip">Asymmetric Encryption</li>
+            <li>Digital Signature</li>
+            <ul>
+                <li>Key generation</li>
+            </ul>
+        </ul>
+    </ol>
 </body>
 
 </html>
