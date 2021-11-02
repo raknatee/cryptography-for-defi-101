@@ -13,6 +13,22 @@
         code {
             display: inline-block;
         }
+        
+        .color-red {
+            color: #e06c75;
+        }
+        
+        .color-blue {
+            color: #3083ae;
+        }
+        
+        .color-orange {
+            color: #d19a5c;
+        }
+        
+        .color-purple {
+            color: #c678dd;
+        }
     </style>
 </head>
 
@@ -91,14 +107,14 @@
             <ul>
                 <li>Ex: One-time Pad</li>
                 <pre><code>msg = "1100"
-Key = "0110"
+<span class="color-red">Key</span> = "0110"
 
-cipher_text = SymmetricEncrypt(Key, msg) = "1010"
+cipher_text = SymmetricEncrypt(<span class="color-red">Key</span>, msg) = "1010"
 send(ciphere_text)</code></pre>
-                <pre><code>assume Key
+                <pre><code>assume <span class="color-red">Key</span>
 cipher_text = receive()
 
-msg = SymmetricDecrypt(Key, cipher_text)</code></pre>
+msg = SymmetricDecrypt(<span class="color-red">Key</span>, cipher_text)</code></pre>
                 <li>Why One-time Pad is perfect secrecy but it cannot be used in real life.</li>
                 <p>
                     \(n \in Z^+ \)
@@ -132,44 +148,44 @@ msg = SymmetricDecrypt(Key, cipher_text)</code></pre>
             <li>Key Setup</li>
 
             <li>Key generation</li>
-            <pre><code>K_E, K_D = keygen(...)
+            <pre><code><span class="color-orange">K_E</span>, <span class="color-purple">K_D</span> = keygen(...)
 
 Asymmetric Encryption: 
-    K_E => Public Key, K_D => Private Key
+    <span class="color-orange">K_E</span> => <span class="color-blue">Public Key</span>, <span class="color-purple">K_D</span> => <span class="color-red">Private Key</span> 
 
 Digital Signature:
-    K_D => Public Key, K_E => Private Key</code></pre>
+    <span class="color-purple">K_D</span> => <span class="color-blue">Public Key</span>, <span class="color-orange">K_E</span> => <span class="color-red">Private Key</span> </code></pre>
             <li class="skip">Asymmetric Encryption</li>
             <li>Digital Signature</li>
             <ul>
                 <li>Sign</li>
-                <pre><code>K_E, K_D = keygen(...)
-Private_Key = K_E
-Public_Key = K_D
+                <pre><code><span class="color-orange">K_E</span>, <span class="color-purple">K_D</span> = keygen(...)
+<span class="color-red">Private_Key</span> = <span class="color-orange">K_E</span>
+<span class="color-blue">Public_Key</span> = <span class="color-purple">K_D</span>
 
 msg = "HelloWorld"
-tag = Sign(Private_Key, msg)
+tag = Sign(<span class="color-red">Private_Key</span>, msg)
 
 send(msg, tag)</code></pre>
                 <li>Verify</li>
-                <pre><code>assume Public_Key
+                <pre><code>assume <span class="color-blue">Public_Key</span>
 
 msg, tag = receive()
-ok? = Verify(Public_Key, msg, tag)</code></pre>
+ok? = Verify(<span class="color-blue">Public_Key</span>, msg, tag)</code></pre>
                 <li>Ex</li>
                 A == 1 bitcoin ==> B
-                <pre><code>K_E, K_D = keygen(...)
-Private_Key_A = K_E
-Public_Key_A  = K_D
+                <pre><code><span class="color-orange">K_E</span>, <span class="color-purple">K_D</span> = keygen(...)
+<span class="color-red">Private_Key_A</span> = <span class="color-orange">K_E</span>
+<span class="color-blue">Public_Key_A</span>  = <span class="color-purple">K_D</span>
 
 msg = "transfer 1 bitcoin to B"
-tag = Sign(Private_Key_A, msg) = "UXIJKF"
+tag = Sign(<span class="color-red">Private_Key_A</span>, msg) = "UXIJKF"
 
 send(msg, tag)</code></pre>
-                <pre><code>assume Public_Key_A
+                <pre><code>assume <span class="color-blue">Public_Key_A</span>
 msg, tag = receive()
 
-ok? = Verity(Public_Key_A, msg, tag)
+ok? = Verity(<span class="color-blue">Public_Key_A</span>, msg, tag)
 </code></pre>
             </ul>
         </ul>
@@ -229,12 +245,12 @@ d=10, e*d=50, e*d % Phi(N)= 18
 d=11, e*d=55, e*d % Phi(N)= 23
 d=12, e*d=60, e*d % Phi(N)= 28
 d=13, e*d=65, e*d % Phi(N)= 1
-K_E={'key': 5, 'mod': 51}
-K_D={'key': 13, 'mod': 51}
+<span class="color-orange">K_E</span>={'key': <span class="color-orange">5</span>, 'mod': 51}
+<span class="color-purple">K_D</span>={'key': <span class="color-purple">13</span>, 'mod': 51}
 msg=6
-6**5 mod 51 = 24
+6**<span class="color-orange">5</span> mod 51 = 24
 cipher_text=24
-24**13 mod 51 = 6</code></pre>
+24**<span class="color-purple">13</span> mod 51 = 6</code></pre>
 
             <pre><code>keygen with p=3, q=17
 N = 3 x 17 = 51
@@ -247,12 +263,12 @@ d=2, e*d=26, e*d % Phi(N)= 26
 d=3, e*d=39, e*d % Phi(N)= 7
 d=4, e*d=52, e*d % Phi(N)= 20
 d=5, e*d=65, e*d % Phi(N)= 1
-K_E={'key': 13, 'mod': 51}
-K_D={'key': 5, 'mod': 51}
+<span class="color-orange">K_E</span>={'key': <span class="color-orange">13</span>, 'mod': 51}
+<span class="color-purple">K_D</span>={'key': <span class="color-purple">5</span>, 'mod': 51}
 msg=6
-6**13 mod 51 = 27
+6**<span class="color-orange">13</span> mod 51 = 27
 cipher_text=27
-27**5 mod 51 = 6</code></pre>
+27**<span class="color-purple">5</span> mod 51 = 6</code></pre>
             <pre><code>keygen with p=2, q=7
 N = 2 x 7 = 14
 Phi(N) = 1 x 6 = 6
@@ -270,12 +286,12 @@ d=8, e*d=40, e*d % Phi(N)= 4
 d=9, e*d=45, e*d % Phi(N)= 3
 d=10, e*d=50, e*d % Phi(N)= 2
 d=11, e*d=55, e*d % Phi(N)= 1
-K_E={'key': 5, 'mod': 14}
-K_D={'key': 11, 'mod': 14}
+<span class="color-orange">K_E</span>={'key': <span class="color-orange">5</span>, 'mod': 14}
+<span class="color-purple">K_D</span>={'key': <span class="color-purple">11</span>, 'mod': 14}
 msg=2
-2**5 mod 14 = 4
+2**<span class="color-orange">5</span> mod 14 = 4
 cipher_text=4
-4**11 mod 14 = 2
+4**<span class="color-purple">11</span> mod 14 = 2
 </code></pre>
         </ol>
     </ol>
