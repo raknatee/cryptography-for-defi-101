@@ -24,11 +24,17 @@
             <li>
                 Communication in the presence of adversaries.
             </li>
+            <li>Jobs</li>
+            <ul>
+                <li>Secret Protection</li>
+                <li>Integrity Protection</li>
+            </ul>
             <li>2 Worlds Setting</li>
             <ul>
                 <li>Symmetric</li>
                 <li>Asymmetric</li>
             </ul>
+            <li>4x4 grid</li>
         </ul>
         <li>Items</li>
         <ul>
@@ -47,7 +53,7 @@
                 <li>Input length and Fixed Output length => cannot contain the information of DATA</li>
                 <ul>
                     <li>Ex: HelloWorld => Hello <pre><code>def h(input):
-    return h[:5]</code></pre></li>
+    return input[:5]</code></pre></li>
                 </ul>
                 <li>Security Definitions</li>
                 <ul>
@@ -55,12 +61,12 @@
                     <ul>
                         <li> It should be difficult to figure out what was hashed simply by looking at the hash value.
                             <pre><code>def h(input):
-    return h[:1]</code></pre></li>
+    return input[:1]</code></pre></li>
                     </ul>
                     <li>Collision Resistance</li>
                     <ul>
                         <li>2 inputs same output <pre><code>def h(input):
-    return h</code></pre></li>
+    return input</code></pre></li>
                     </ul>
                 </ul>
                 <li class="skip">Securit Proofs</li>
@@ -78,6 +84,9 @@
             <li>Symmetric Encryption</li>
             <ul>
                 <li>Ex: One-time Pad</li>
+                <pre><code>msg='1100'
+key='0110'
+ciphere_text='1010'</code></pre>
                 <li>Why One-time Pad is perfect secrecy but it cannot be used in real life.</li>
                 <p>
                     \(n \in Z^+ \)
@@ -112,8 +121,115 @@
             <li>Digital Signature</li>
             <ul>
                 <li>Key generation</li>
+                <li>Sign</li>
+                <li>Verify</li>
             </ul>
         </ul>
+        <li>After class</li>
+        <ol>
+            <li>Textbook RSA</li>
+            <ol>
+                <li>Key generation</li>
+                <ol>
+                    <li>
+                        <p>
+                            \(p \in Z_P, q \in Z_P, p \ne q \)
+
+                        </p>
+                    </li>
+                    <li>
+                        </p>\(N = p \times q\)
+                        <p>
+                    </li>
+
+                    <li>
+                        <p>
+
+                            \(\phi(N) = (p-1) \times (q-1)\)
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Choose \(e\) when \(1 &lt e &lt \phi(N)\) and coprime with \( N, \phi(N)\) </p>
+                    </li>
+                    <li>
+                        <p>
+                            Choose \(d\) when \( (e \times d) mod \phi(N) = 1\)
+                        </p>
+                    </li>
+                </ol>
+                <li>Discrete Logarithm</li>
+                <p>\( (d^k) mod (m) \)</p>
+            </ol>
+
+            <pre><code>keygen with p=3, q=17
+N = 3 x 17 = 51
+Phi(N) = 2 x 16 = 32
+choose e from [2, 32] and coprime with 51, 32
+coprime [5, 7, 11, 13, 19, 23, 29, 31]
+pick at 0 => K_E=5
+d=1, e*d=5, e*d % Phi(N)= 5
+d=2, e*d=10, e*d % Phi(N)= 10
+d=3, e*d=15, e*d % Phi(N)= 15
+d=4, e*d=20, e*d % Phi(N)= 20
+d=5, e*d=25, e*d % Phi(N)= 25
+d=6, e*d=30, e*d % Phi(N)= 30
+d=7, e*d=35, e*d % Phi(N)= 3
+d=8, e*d=40, e*d % Phi(N)= 8
+d=9, e*d=45, e*d % Phi(N)= 13
+d=10, e*d=50, e*d % Phi(N)= 18
+d=11, e*d=55, e*d % Phi(N)= 23
+d=12, e*d=60, e*d % Phi(N)= 28
+d=13, e*d=65, e*d % Phi(N)= 1
+{'key': 5, 'mod': 51}
+{'key': 13, 'mod': 51}
+msg=6
+6**5 mod 51 = 24
+cipher_text=24
+24**13 mod 51 = 6</code></pre>
+
+            <pre><code>keygen with p=3, q=17
+N = 3 x 17 = 51
+Phi(N) = 2 x 16 = 32
+choose e from [2, 32] and coprime with 51, 32
+coprime [5, 7, 11, 13, 19, 23, 29, 31]
+pick at 3 => K_E=13
+d=1, e*d=13, e*d % Phi(N)= 13
+d=2, e*d=26, e*d % Phi(N)= 26
+d=3, e*d=39, e*d % Phi(N)= 7
+d=4, e*d=52, e*d % Phi(N)= 20
+d=5, e*d=65, e*d % Phi(N)= 1
+{'key': 13, 'mod': 51}
+{'key': 5, 'mod': 51}
+msg=6
+6**13 mod 51 = 27
+cipher_text=27
+27**5 mod 51 = 6</code></pre>
+            <pre><code>keygen with p=2, q=7
+N = 2 x 7 = 14
+Phi(N) = 1 x 6 = 6
+choose e from [2, 6] and coprime with 14, 6
+coprime [5]
+pick at 0 => K_E=5
+d=1, e*d=5, e*d % Phi(N)= 5
+d=2, e*d=10, e*d % Phi(N)= 4
+d=3, e*d=15, e*d % Phi(N)= 3
+d=4, e*d=20, e*d % Phi(N)= 2
+d=5, e*d=25, e*d % Phi(N)= 1
+d=6, e*d=30, e*d % Phi(N)= 0
+d=7, e*d=35, e*d % Phi(N)= 5
+d=8, e*d=40, e*d % Phi(N)= 4
+d=9, e*d=45, e*d % Phi(N)= 3
+d=10, e*d=50, e*d % Phi(N)= 2
+d=11, e*d=55, e*d % Phi(N)= 1
+{'key': 5, 'mod': 14}
+{'key': 11, 'mod': 14}
+msg=2
+2**5 mod 14 = 4
+cipher_text=4
+4**11 mod 14 = 2
+</code></pre>
+        </ol>
     </ol>
 </body>
 
