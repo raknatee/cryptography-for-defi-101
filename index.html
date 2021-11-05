@@ -7,9 +7,29 @@
     <title>
         cryptography For DeFi 101</title>
     <link rel="stylesheet" href="./main-style.css">
+
+
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            justify-items: center;
+            gap: 1rem 1rem;
+            border: #222222 solid .5rem;
+            border-radius: 1rem;
+            padding: 1rem;
+        }
+        
+        .grid-item {
+            background-color: #222222;
+            color: aliceblue;
+            width: 100%;
+            border-radius: 1rem;
+            text-align: center;
+        }
+        
         code {
             display: inline-block;
         }
@@ -22,12 +42,28 @@
             color: #3083ae;
         }
         
+        .color-light-blue {
+            color: #5fafef;
+        }
+        
         .color-orange {
             color: #d19a5c;
         }
         
         .color-purple {
             color: #c678dd;
+        }
+        
+        .color-yellow {
+            color: #ffd11d;
+        }
+        
+        .color-green {
+            color: #98c363;
+        }
+        
+        .blockchain-img {
+            height: 40vh;
         }
     </style>
 </head>
@@ -37,8 +73,10 @@
     <ol>
         <li>What is exactly Cryptography?</li>
         <ul>
+            <li>Cryptography != Cryptocurrency</li>
+            <li>Cryptocurrency = 10%? Cryptography + Distributed system + Finance + ...</li>
             <li>
-                Communication in the presence of adversaries.
+                Cryptography => Communication in the presence of adversaries.
             </li>
             <li>Jobs</li>
             <ul>
@@ -50,7 +88,36 @@
                 <li>Symmetric</li>
                 <li>Asymmetric</li>
             </ul>
-            <li>2x2 grid</li>
+            <div class="grid-3">
+                <div></div>
+                <div>
+                    <p>
+                        Sym
+                    </p>
+                </div>
+                <div>
+                    <p>Asym</p>
+                </div>
+                <div>
+                    <p>Secret</p>
+                </div>
+                <div class="grid-item">
+                    <p>SE</p>
+                </div>
+                <div class="grid-item">
+                    <p>AE</p>
+                </div>
+                <div>
+                    <p>Integrity</p>
+                </div>
+                <div class="grid-item">
+                    <p>MAC</p>
+                </div>
+                <div class="grid-item">
+                    <p>DS</p>
+                </div>
+
+            </div>
         </ul>
         <li>Items</li>
         <ul>
@@ -81,7 +148,7 @@
                     </ul>
                     <li>Collision Resistance</li>
                     <ul>
-                        <li>2 inputs same output <pre><code>def Hash(input):
+                        <li>It should be difficult to figure out what are 2 inputs that have same hash. <pre><code>def Hash(input):
     return input</code></pre></li>
                     </ul>
                 </ul>
@@ -95,6 +162,31 @@
                 <ul>
                     <li>HelloWorld => 872e4e50ce9990d8b041330c47c9ddd11bec6b503ae9386a99da8584e9bb12c4</li>
                     <li>HelloWorldd => 61b5db76aeef61f0b9357a31580a73b5c87c8e90eae8e350d13fe6307eae036e</li>
+                    <li>Pseudocode ref: <a href="https://en.wikipedia.org/wiki/SHA-2">wikipedia SHA-2</a>
+                        <pre><code>for i from 0 to 63
+    S1 := (e <span class="color-light-blue">rightrotate</span> 6) <span class="color-light-blue">xor</span> (e <span class="color-light-blue">rightrotate</span> 11) <span class="color-light-blue">xor</span> (e <span class="color-light-blue">rightrotate</span> 25)
+    ch := (e <span class="color-light-blue">and</span> f) <span class="color-light-blue">xor</span> ((<span class="color-light-blue">not</span> e) <span class="color-light-blue">and</span> g)
+    temp1 := h + S1 + ch + k[i] + w[i]
+    S0 := (a <span class="color-light-blue">rightrotate</span> 2) <span class="color-light-blue">xor</span> (a <span class="color-light-blue">rightrotate</span> 13) <span class="color-light-blue">xor</span> (a <span class="color-light-blue">rightrotate</span> 22)
+    maj := (a <span class="color-light-blue">and</span> b) <span class="color-light-blue">xor</span> (a <span class="color-light-blue">and</span> c) <span class="color-light-blue">xor</span> (b <span class="color-light-blue">and</span> c)
+    temp2 := S0 + maj
+</code></pre>
+                    </li>
+                </ul>
+                <li>Application(s)</li>
+                <ul>
+                    <li>Password hashing (+salt)</li>
+                    <li>Hashing Game (Bitcoin consensus protocol, Proof of work)</li>
+                    <pre><code>N = 40
+<span class="color-green">data</span> = receive()
+while True:
+
+    <span class="color-yellow">challenge</span> = Random()
+    h = Hash( <span class="color-green">data</span> + <span class="color-yellow">challenge</span> )
+
+    if(h[:N] == "0" * N):
+        send(<span class="color-yellow">challenge</span>)
+        break</code></pre>
                 </ul>
             </ul>
 
@@ -106,6 +198,14 @@
             <li>Symmetric Encryption</li>
             <ul>
                 <li>Ex: One-time Pad</li>
+                <pre><code>def SymmetricEncrypt(Key, data):
+    return Key <span class="color-light-blue">xor</span> data
+</code></pre>
+                <pre><code><span class="color-yellow">0</span> <span class="color-light-blue">xor</span> <span class="color-yellow">0</span> = 0
+<span class="color-yellow">0</span> <span class="color-light-blue">xor</span> <span class="color-green">1</span> = 1
+<span class="color-green">1</span> <span class="color-light-blue">xor</span> <span class="color-yellow">0</span> = 1
+<span class="color-green">1</span> <span class="color-light-blue">xor</span> <span class="color-green">1</span> = 0
+</code></pre>
                 <pre><code>msg = "1100"
 <span class="color-red">Key</span> = "0110"
 
@@ -142,6 +242,16 @@ msg = SymmetricDecrypt(<span class="color-red">Key</span>, cipher_text)</code></
                 </ul>
             </ul>
             <li class="skip">Message Authentication Code (MAC)</li>
+            <ul class="skip">
+                <li>Why do we need integrity protection?</li>
+                <li class="skip">Securiy Proofs</li>
+                <ul class="skip">
+                    <li>WUF-CMA</li>
+                    <li>SUF-CMA
+                    </li>
+
+                </ul>
+            </ul>
         </ul>
         <li>Asymmetric</li>
         <ul>
@@ -189,6 +299,8 @@ ok? = Verity(<span class="color-blue">Public_Key_A</span>, msg, tag)
 </code></pre>
             </ul>
         </ul>
+        <li>Blockchain as a Hash chain</li>
+        <img src="./blockchain.svg" class="blockchain-img" alt="">
         <li>After class</li>
         <ol>
             <li>Textbook RSA</li>
@@ -214,7 +326,7 @@ ok? = Verity(<span class="color-blue">Public_Key_A</span>, msg, tag)
                     </li>
                     <li>
                         <p>
-                            Choose \(e\) when \(1 &lt e &lt \phi(N)\) and coprime with \( N, \phi(N)\) </p>
+                            Choose \(e\) when \(1 &lt e &lt \phi(N)\) ,and coprime with \( N\) and \( \phi(N)\) </p>
                     </li>
                     <li>
                         <p>
@@ -230,8 +342,8 @@ ok? = Verity(<span class="color-blue">Public_Key_A</span>, msg, tag)
 N = 3 x 17 = 51
 Phi(N) = 2 x 16 = 32
 choose e from [2, 32] and coprime with 51, 32
-coprime [5, 7, 11, 13, 19, 23, 29, 31]
-pick at 0 => K_E=5
+coprime [<span class="color-orange">5</span>, 7, 11, 13, 19, 23, 29, 31]
+pick at 0 => <span class="color-orange">K_E=5</span>
 d=1, e*d=5, e*d % Phi(N)= 5
 d=2, e*d=10, e*d % Phi(N)= 10
 d=3, e*d=15, e*d % Phi(N)= 15
@@ -244,7 +356,7 @@ d=9, e*d=45, e*d % Phi(N)= 13
 d=10, e*d=50, e*d % Phi(N)= 18
 d=11, e*d=55, e*d % Phi(N)= 23
 d=12, e*d=60, e*d % Phi(N)= 28
-d=13, e*d=65, e*d % Phi(N)= 1
+<span class="color-purple">d=13</span>, e*d=65, e*d % Phi(N)= 1
 <span class="color-orange">K_E</span>={'key': <span class="color-orange">5</span>, 'mod': 51}
 <span class="color-purple">K_D</span>={'key': <span class="color-purple">13</span>, 'mod': 51}
 msg=6
@@ -256,13 +368,13 @@ cipher_text=24
 N = 3 x 17 = 51
 Phi(N) = 2 x 16 = 32
 choose e from [2, 32] and coprime with 51, 32
-coprime [5, 7, 11, 13, 19, 23, 29, 31]
-pick at 3 => K_E=13
+coprime [5, 7, 11, <span class="color-orange">13</span>, 19, 23, 29, 31]
+pick at 3 => <span class="color-orange">K_E=13</span>
 d=1, e*d=13, e*d % Phi(N)= 13
 d=2, e*d=26, e*d % Phi(N)= 26
 d=3, e*d=39, e*d % Phi(N)= 7
 d=4, e*d=52, e*d % Phi(N)= 20
-d=5, e*d=65, e*d % Phi(N)= 1
+<span class="color-purple">d=5</span>, e*d=65, e*d % Phi(N)= 1
 <span class="color-orange">K_E</span>={'key': <span class="color-orange">13</span>, 'mod': 51}
 <span class="color-purple">K_D</span>={'key': <span class="color-purple">5</span>, 'mod': 51}
 msg=6
@@ -273,8 +385,8 @@ cipher_text=27
 N = 2 x 7 = 14
 Phi(N) = 1 x 6 = 6
 choose e from [2, 6] and coprime with 14, 6
-coprime [5]
-pick at 0 => K_E=5
+coprime [<span class="color-orange">5</span>]
+pick at 0 => <span class="color-orange">K_E=5</span>
 d=1, e*d=5, e*d % Phi(N)= 5
 d=2, e*d=10, e*d % Phi(N)= 4
 d=3, e*d=15, e*d % Phi(N)= 3
@@ -285,7 +397,7 @@ d=7, e*d=35, e*d % Phi(N)= 5
 d=8, e*d=40, e*d % Phi(N)= 4
 d=9, e*d=45, e*d % Phi(N)= 3
 d=10, e*d=50, e*d % Phi(N)= 2
-d=11, e*d=55, e*d % Phi(N)= 1
+<span class="color-purple">d=11</span>, e*d=55, e*d % Phi(N)= 1
 <span class="color-orange">K_E</span>={'key': <span class="color-orange">5</span>, 'mod': 14}
 <span class="color-purple">K_D</span>={'key': <span class="color-purple">11</span>, 'mod': 14}
 msg=2
