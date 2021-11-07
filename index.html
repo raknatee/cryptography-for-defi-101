@@ -30,6 +30,21 @@
             text-align: center;
         }
         
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        
+        .grid-2-item {
+            border: #e06c75 solid .5rem;
+            border-radius: 1rem;
+            text-align: center;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            width: 35vw;
+        }
+        
         code {
             display: inline-block;
         }
@@ -119,79 +134,8 @@
 
             </div>
         </ul>
-        <li>Items</li>
-        <ul>
-            <li class="skip">Block Ciphers</li>
-            <ul class="skip">
-                <li>DES, AES, etc.</li>
-                <li>Securit Proofs</li>
-                <ul>
-                    <li>PRP-CPA</li>
-                    <li>PRP-CCA</li>
-                    <li>PRF</li>
-                </ul>
-            </ul>
-            <li>Hash Function</li>
-            <ul>
-                <li>Input length and Fixed Output length => cannot contain the information of DATA</li>
-                <ul>
-                    <li>Ex: HelloWorld => Hello <pre><code>def Hash(input):
-    return input[:5]</code></pre></li>
-                </ul>
-                <li>Security Definitions</li>
-                <ul>
-                    <li>Pre-image Resistance</li>
-                    <ul>
-                        <li> It should be difficult to figure out what was hashed simply by looking at the hash value.
-                            <pre><code>def Hash(input):
-    return input[:1]</code></pre></li>
-                    </ul>
-                    <li>Collision Resistance</li>
-                    <ul>
-                        <li>It should be difficult to figure out what are 2 inputs that have same hash. <pre><code>def Hash(input):
-    return input</code></pre></li>
-                    </ul>
-                </ul>
-                <li class="skip">Security Proofs</li>
-                <ul class="skip">
-                    <li>Pre-image attacks</li>
-                    <li>Second pre-image attacks</li>
-                    <li>Collision-finding attacks</li>
-                </ul>
-                <li>SHA256</li>
-                <ul>
-                    <li>HelloWorld => 872e4e50ce9990d8b041330c47c9ddd11bec6b503ae9386a99da8584e9bb12c4</li>
-                    <li>HelloWorldd => 61b5db76aeef61f0b9357a31580a73b5c87c8e90eae8e350d13fe6307eae036e</li>
-                    <li>Pseudocode ref: <a href="https://en.wikipedia.org/wiki/SHA-2">wikipedia SHA-2</a>
-                        <pre><code>for i from 0 to 63
-    S1 := (e <span class="color-light-blue">rightrotate</span> 6) <span class="color-light-blue">xor</span> (e <span class="color-light-blue">rightrotate</span> 11) <span class="color-light-blue">xor</span> (e <span class="color-light-blue">rightrotate</span> 25)
-    ch := (e <span class="color-light-blue">and</span> f) <span class="color-light-blue">xor</span> ((<span class="color-light-blue">not</span> e) <span class="color-light-blue">and</span> g)
-    temp1 := h + S1 + ch + k[i] + w[i]
-    S0 := (a <span class="color-light-blue">rightrotate</span> 2) <span class="color-light-blue">xor</span> (a <span class="color-light-blue">rightrotate</span> 13) <span class="color-light-blue">xor</span> (a <span class="color-light-blue">rightrotate</span> 22)
-    maj := (a <span class="color-light-blue">and</span> b) <span class="color-light-blue">xor</span> (a <span class="color-light-blue">and</span> c) <span class="color-light-blue">xor</span> (b <span class="color-light-blue">and</span> c)
-    temp2 := S0 + maj
-</code></pre>
-                    </li>
-                </ul>
-                <li>Application(s)</li>
-                <ul>
-                    <li>Password hashing (+salt)</li>
-                    <li>Hashing Game (Bitcoin consensus protocol, Proof of work)</li>
-                    <pre><code>N = 40
-<span class="color-green">data</span> = receive()
-while True:
-
-    <span class="color-yellow">challenge</span> = Random()
-    h = Hash( <span class="color-green">data</span> + <span class="color-yellow">challenge</span> )
-
-    if(h[:N] == "0" * N):
-        send(<span class="color-yellow">challenge</span>)
-        break</code></pre>
-                </ul>
-            </ul>
 
 
-        </ul>
         <li>Symmetric</li>
         <ul>
             <li>Key Setup</li>
@@ -199,6 +143,9 @@ while True:
             <ul>
                 <li>Ex: One-time Pad</li>
                 <pre><code>def SymmetricEncrypt(Key, data):
+    return Key <span class="color-light-blue">xor</span> data
+</code></pre>
+                <pre><code>def SymmetricDecrypt(Key, data):
     return Key <span class="color-light-blue">xor</span> data
 </code></pre>
                 <pre><code><span class="color-yellow">0</span> <span class="color-light-blue">xor</span> <span class="color-yellow">0</span> = 0
@@ -209,7 +156,7 @@ while True:
                 <pre><code>msg = "1100"
 <span class="color-red">Key</span> = "0110"
 
-cipher_text = SymmetricEncrypt(<span class="color-red">Key</span>, msg) = "1010"
+cipher_text = SymmetricEncrypt(<span class="color-red">Key</span>, msg) => "1010"
 send(ciphere_text)</code></pre>
                 <pre><code>assume <span class="color-red">Key</span>
 cipher_text = receive()
@@ -225,6 +172,14 @@ msg = SymmetricDecrypt(<span class="color-red">Key</span>, cipher_text)</code></
                 <p>
                     \(Pr[M = a |C = b] = Pr[M=a]\)
                 </p>
+                <div class="grid-2">
+                    <div class="grid-2-item">
+                        cipher_text = "1010" <br> msg = ?
+                    </div>
+                    <div class="grid-2-item">
+                        msg = ?
+                    </div>
+                </div>
                 <li class="skip">Symmetric Encryption = Modes of operation + Block Ciphers</li>
                 <li class="skip">Modes of operation</li>
                 <ul class="skip">
@@ -288,7 +243,7 @@ ok? = Verify(<span class="color-blue">Public_Key</span>, msg, tag)</code></pre>
 <span class="color-red">Private_Key_A</span> = <span class="color-orange">K_E</span>
 <span class="color-blue">Public_Key_A</span>  = <span class="color-purple">K_D</span>
 
-msg = "transfer 1 bitcoin to B"
+msg = "A transferred 1 bitcoin to B"
 tag = Sign(<span class="color-red">Private_Key_A</span>, msg) = "UXIJKF"
 
 send(msg, tag)</code></pre>
@@ -298,6 +253,80 @@ msg, tag = receive()
 ok? = Verity(<span class="color-blue">Public_Key_A</span>, msg, tag)
 </code></pre>
             </ul>
+        </ul>
+
+        <li>Items</li>
+        <ul>
+            <li class="skip">Block Ciphers</li>
+            <ul class="skip">
+                <li>DES, AES, etc.</li>
+                <li>Securit Proofs</li>
+                <ul>
+                    <li>PRP-CPA</li>
+                    <li>PRP-CCA</li>
+                    <li>PRF</li>
+                </ul>
+            </ul>
+            <li>Hash Function</li>
+            <ul>
+                <li>Input length and Fixed Output length => cannot contain the information of DATA</li>
+                <pre><code>def hash(input):
+    return input[:5] + input[5:10]</code></pre>
+                <pre><code>hash( 153208924765030 ) =>           104567
+hash( 15135456103421381230515 ) =>   060745
+hash( 1128123054 ) =>                034335</code></pre>
+            </ul>
+            <li>Security Definitions</li>
+            <ul>
+                <li>Pre-image Resistance</li>
+                <ul>
+                    <li> It should be difficult to figure out what was hashed simply by looking at the hash value.
+                    </li>
+                </ul>
+                <li>Collision Resistance</li>
+                <ul>
+                    <li>It should be difficult to figure out what are 2 inputs that have same hash.</li>
+                </ul>
+            </ul>
+            <li class="skip">Security Proofs</li>
+            <ul class="skip">
+                <li>Pre-image attacks</li>
+                <li>Second pre-image attacks</li>
+                <li>Collision-finding attacks</li>
+            </ul>
+            <li>SHA256</li>
+            <ul>
+                <li>HelloWorld => 872e4e50ce9990d8b041330c47c9ddd11bec6b503ae9386a99da8584e9bb12c4</li>
+                <li>HelloWorldd => 61b5db76aeef61f0b9357a31580a73b5c87c8e90eae8e350d13fe6307eae036e</li>
+                <li>Pseudocode ref: <a href="https://en.wikipedia.org/wiki/SHA-2">wikipedia SHA-2</a>
+                    <pre><code>for i from 0 to 63
+    S1 := (e <span class="color-light-blue">rightrotate</span> 6) <span class="color-light-blue">xor</span> (e <span class="color-light-blue">rightrotate</span> 11) <span class="color-light-blue">xor</span> (e <span class="color-light-blue">rightrotate</span> 25)
+    ch := (e <span class="color-light-blue">and</span> f) <span class="color-light-blue">xor</span> ((<span class="color-light-blue">not</span> e) <span class="color-light-blue">and</span> g)
+    temp1 := h + S1 + ch + k[i] + w[i]
+    S0 := (a <span class="color-light-blue">rightrotate</span> 2) <span class="color-light-blue">xor</span> (a <span class="color-light-blue">rightrotate</span> 13) <span class="color-light-blue">xor</span> (a <span class="color-light-blue">rightrotate</span> 22)
+    maj := (a <span class="color-light-blue">and</span> b) <span class="color-light-blue">xor</span> (a <span class="color-light-blue">and</span> c) <span class="color-light-blue">xor</span> (b <span class="color-light-blue">and</span> c)
+    temp2 := S0 + maj
+</code></pre>
+                </li>
+            </ul>
+            <li>Application(s)</li>
+            <ul>
+                <li>Password hashing (+salt)</li>
+                <li>Hashing Game (Bitcoin consensus protocol, Proof of work)</li>
+                <pre><code>N = 40
+<span class="color-green">data</span> = receive()
+while True:
+
+    <span class="color-yellow">challenge</span> = Random()
+    h = Hash( <span class="color-green">data</span> + <span class="color-yellow">challenge</span> )
+
+    if(h[:N] == "0" * N):
+        send(<span class="color-yellow">challenge</span>)
+        break</code></pre>
+            </ul>
+        </ul>
+
+
         </ul>
         <li>Blockchain as a Hash chain</li>
         <img src="./blockchain.svg" class="blockchain-img" alt="">
