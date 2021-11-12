@@ -162,24 +162,7 @@ send(ciphere_text)</code></pre>
 cipher_text = receive()
 
 msg = SymmetricDecrypt(<span class="color-red">Key</span>, cipher_text)</code></pre>
-                <li>Why One-time Pad is perfect secrecy but it cannot be used in real life.</li>
-                <p>
-                    \(n \in Z^+ \)
-                </p>
-                <p>
-                    \(a,b \in \{0,1\}^n \)
-                </p>
-                <p>
-                    \(Pr[M = a |C = b] = Pr[M=a]\)
-                </p>
-                <div class="grid-2">
-                    <div class="grid-2-item">
-                        cipher_text = "1010" <br> msg = ?
-                    </div>
-                    <div class="grid-2-item">
-                        msg = ?
-                    </div>
-                </div>
+
                 <li class="skip">Symmetric Encryption = Modes of operation + Block Ciphers</li>
                 <li class="skip">Modes of operation</li>
                 <ul class="skip">
@@ -366,6 +349,25 @@ while True:
         </ul>
         <li>After class</li>
         <ol>
+            <li>Why One-time Pad is perfect secrecy but it cannot be used in real life.</li>
+            <p>Perfect Secrecy</p>
+            <p>
+                \(n \in Z^+ \)
+            </p>
+            <p>
+                \(a,b \in \{0,1\}^n \)
+            </p>
+            <p>
+                \(Pr[M = a |C = b] = Pr[M=a]\)
+            </p>
+            <div class="grid-2">
+                <div class="grid-2-item">
+                    cipher_text = "1010" <br> msg = ?
+                </div>
+                <div class="grid-2-item">
+                    msg = ?
+                </div>
+            </div>
             <li>Textbook RSA</li>
             <ol>
                 <li>Key generation</li>
